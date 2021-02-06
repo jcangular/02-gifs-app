@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GifsService } from '../../gifs/services/gifs.service';
 
 @Component({
     selector: 'app-sidenav',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidenavComponent implements OnInit {
 
-    constructor() { }
+    constructor(private gifsService: GifsService) { }
 
     ngOnInit(): void {
+    }
+
+    public get history(): string[] {
+        return this.gifsService.history;
     }
 
 }

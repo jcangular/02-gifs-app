@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { GifsService } from '../services/gifs.service';
 
 @Component({
     selector: 'app-finder',
@@ -6,11 +7,16 @@ import { Component, OnInit } from '@angular/core';
     styles: [
     ]
 })
-export class FinderComponent implements OnInit {
+export class FinderComponent {
 
-    constructor() { }
+    // ! -> Not Null Operator.
+    @ViewChild('txtFind') txtFind!: ElementRef<HTMLInputElement>;
 
-    ngOnInit(): void {
+    constructor(private gifsService: GifsService) { }
+
+    public find(): void {
+        const term = this.txtFind.nativeElement.value;
+        this.gifsService.findGifs(term);
+        this.txtFind.nativeElement.value = '';
     }
-
 }

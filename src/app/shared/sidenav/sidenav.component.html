@@ -5,8 +5,8 @@
     <hr class="text-light">
 
     <div class="list-group list-reset">
-        <a href="#" class="list-group-item list-group-item-action">
-            Dashboard
+        <a href="#" class="list-group-item list-group-item-action" *ngFor="let term of history">
+            {{term | titlecase}}
         </a>
     </div>
 
