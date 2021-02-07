@@ -1,1 +1,17 @@
-<p>gisf works!</p>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <article class="col" *ngFor="let gif of results">
+
+        <div class="card h-100">
+            <img class="card-img-top" [src]="gif.images.downsized_medium.url" [alt]="gif.title">
+            <section class="card-body"></section>
+            <section class="card-footer">
+                <p class="card-text">
+                    {{gif.title}}
+                    <small *ngIf="gif.username" class="text-muted"> by {{gif.username}} </small>
+                </p>
+
+            </section>
+        </div>
+
+    </article>
+</div>

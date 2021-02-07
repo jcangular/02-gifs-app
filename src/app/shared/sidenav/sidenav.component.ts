@@ -17,4 +17,8 @@ export class SidenavComponent implements OnInit {
         return this.gifsService.history;
     }
 
+    public clearHistory(): void {
+        this.gifsService.clear();
+    }
+
 }

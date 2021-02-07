@@ -10,4 +10,14 @@
         </a>
     </div>
 
+    <ng-container *ngIf="history.length > 0">
+        <hr class="text-light">
+        <div class="d-grid gap-2">
+            <button class="btn btn-danger" (click)="clearHistory()">Limpiar</button>
+        </div>
+    </ng-container>
+
+
+
+
 </nav>
