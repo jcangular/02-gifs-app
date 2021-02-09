@@ -1,5 +1,5 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
-    <article class="col" *ngFor="let gif of results">
+    <article class="col animate__animated animate__fadeIn animate__faster" *ngFor="let gif of results">
 
         <div class="card h-100">
             <img class="card-img-top" [src]="gif.images.downsized_medium.url" [alt]="gif.title">
