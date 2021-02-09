@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { GifsResponse, GifsSearch } from '../interfaces/gifs.interfaces';
 
 @Injectable({
@@ -27,9 +27,13 @@ export class GifsService {
 
     public clear(): void {
         this._history = [];
-        this.save();
+        this.saveHistory();
     }
 
+    /**
+     * Buscar los gif según el termino.
+     * @param term el término a buscar.
+     */
     public findGifs(term: string): void {
         if (!term.trim()) {
             return;
@@ -46,16 +50,19 @@ export class GifsService {
                 .reduce(
                     (list, elem) => list.includes(elem) ? list : [...list, elem], []
                 ).splice(0, 10);
-            this.save();
+            this.saveHistory();
+
+            const params = new HttpParams()
+                .set('api_key', this.apiKey)
+                .set('limit', '10')
+                .set('q', query);
+
+            this.http.get<GifsResponse<GifsSearch[]>>(`${this.urlBase}/search`, { params })
+                .subscribe(resp => {
+                    this._results = resp.data;
+                    this.saveResult();
+                });
         }
-
-        const url = `${this.urlBase}/search?api_key=${this.apiKey}&limit=10&q=${query}`;
-
-        this.http.get<GifsResponse<GifsSearch[]>>(url)
-            .subscribe(resp => {
-                this._results = resp.data;
-            });
-
     }
 
     /**
@@ -66,12 +73,24 @@ export class GifsService {
         if (item) {
             this._history = JSON.parse(item);
         }
+
+        const results = localStorage.getItem('results');
+        if (results) {
+            this._results = JSON.parse(results);
+        }
     }
 
     /**
      * Guarda el historial en el local storage.
      */
-    private save(): void {
+    private saveHistory(): void {
         localStorage.setItem('history', JSON.stringify(this._history));
+    }
+
+    /**
+     * Guarda los resultados en el local storage.
+     */
+    private saveResult(): void {
+        localStorage.setItem('results', JSON.stringify(this._results));
     }
 }

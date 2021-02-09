@@ -21,4 +21,8 @@ export class SidenavComponent implements OnInit {
         this.gifsService.clear();
     }
 
+    public find(term: string): void {
+        this.gifsService.findGifs(term);
+    }
+
 }
